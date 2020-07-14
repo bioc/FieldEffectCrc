@@ -9,12 +9,11 @@ author:
   - Department of General Surgery
   email: chd5n@virginia.edu
 package: "FieldEffectCrc"
-date: "`r doc_date()`"
+date: "`r BiocStyle::doc_date()`"
 output:
   BiocStyle::html_document
 vignette: >
-  %\VignetteIndexEntry{Tumor, tumor-adjacent normal, and healthy colorectal
-    transcriptomes as a SummarizedExperiment on Bioconductor's ExperimentHub}
+  %\VignetteIndexEntry{Colorectal transcriptomes as a SummarizedExperiment on Bioconductor's ExperimentHub}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -52,30 +51,42 @@ Third, find the `FieldEffectCrc` data objects and look at their descriptions:
 
 ```{r find-data}
 hub = ExperimentHub()
+## simply list the resource names
+ns <- listResources(hub,"FieldEffectCrc")
+ns
+## query the hub for full metadata
 crcData <- query(hub, "FieldEffectCrc")
 crcData
+## extract metadata
 df <- mcols(crcData)
 df
+## see where the cache is stored
+hc <- hubCache(crcData)
+hc
 ```
 
 Fourth, explore the metadata of a particular file. Let's look at the data for cohort A:
 
 ```{r explore-file}
-md <- hub["EH##"]
+md <- hub["EH3524"]
 md
 ```
 
 Fifth, download the data object itself as a `SummarizedExperiment`:
 
 ```{r download-data}
-data <- hub[["EH##"]]
-data
+## using resource ID
+data1 <- hub[["EH3524"]]
+data1
+## using loadResources()
+data2 <- loadResources(hub,"FieldEffectCrc","cohort A")
+data2
 ```
 
 Since the data is a `SummarizedExperiment`, the different phenotypes can be accessed using `colData()`. The phenotype of interest in the field effect analysis is referred to as `sampType`:
 
 ```{r phenotypes}
-summary(colData(data)$sampType)
+summary(colData(data1)$sampType)
 ```
 
 # Quick Start
@@ -83,6 +94,7 @@ summary(colData(data)$sampType)
 To immediately access the count data for the 834 samples in cohort A, load the `SummarizedExperiment` object for cohort A as demonstrated in the [Installation](#installation) section immediately above. Then use the `assays()` accessor function to extract the `counts` assay, which is the second assay in the `SummarizedExperiment`:
 
 ```{r quick-start-1}
+se <- data1
 counts1 <- assays(se)[["counts"]]
 ```
 
@@ -106,13 +118,16 @@ In the following steps, we will use `DESeq2` to perform differential expression 
 
 ## Prepare DESeqDataSet
 
-In order to take advantage of the feature lengths preserved by `tximport`, we will recreate a `tximport` object from the `SummarizedExperiment` object downloaded from `ExperimentHub` and use the `DESeqDataSetFromTximport()` function to create the `DESeqDataSet` object. Alternatively, the `SummarizedExperiment` object itself could be used to create the `DESeqDataSet` object using the `DESeqDataSet()` function, but the order of the assays would need to be re-arranged, as the `DESeqDataSet()` function expects `counts` to be the first assay in a `SummarizedExperiment` object, and `abundance` is the first assay in the `FieldEffectCrc` objects to facilitate conversion to `tximport` objects. Yet another option is to extract the `counts` assay as a matrix and use the `DESeqDataSetFromMatrix()` function to create the `DESeqDataSet` object. Since there are probably some benefits to feature length normalization as implemented in `DESeq2` when such information is available, we demonstrate creation of the `tximport` object.
+In order to take advantage of the feature lengths preserved by `tximport`, we will recreate a `tximport` object from the `SummarizedExperiment` object downloaded from `ExperimentHub` and use the `DESeqDataSetFromTximport()` function to create the `DESeqDataSet` object. Alternatively, the `SummarizedExperiment` object itself could be used to create the `DESeqDataSet` object using the `DESeqDataSet()` function, but the order of the assays would need to be re-arranged, as the `DESeqDataSet()` function expects `counts` to be the first assay in a `SummarizedExperiment` object, and `abundance` is the first assay in the `FieldEffectCrc` objects to facilitate conversion to `tximport` objects. Such a re-ordering is facilitated by the `FieldEffectCrc::reorder_assays()` function. Yet another option is to extract the `counts` assay as a matrix and use the `DESeqDataSetFromMatrix()` function to create the `DESeqDataSet` object. Since there are probably some benefits to feature length normalization as implemented in `DESeq2` when such information is available, we demonstrate creation of the `tximport` object.
 
 First, make the `tximport` object, which is just an object of class `list` from base R:
 
 ```{r make-txi}
+## manual construction
 txi <- as.list(assays(se))
 txi$countsFromAbundance <- "no"
+## convenience function construction
+txi <- make_txi(se)
 ```
 
 Next, we could assign the clinical annotations from `colData(se)` to an `S4Vectors::DataFrame` or a `base::data.frame` object, since that is what `DESeqDataSetFromTximport()` expects for the `colData` argument. However, the `colData` slot of a `SummarizedExperiment` object already stores the clinical annotations as an `S4Vectors::DataFrame`, so we are ready to create the `DESeqDataSet` object:

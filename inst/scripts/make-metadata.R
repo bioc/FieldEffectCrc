@@ -26,7 +26,7 @@ meta <- data.frame(
                     "normal adjacent-to-tumor, and healthy, represented as a",
                     "SummarizedExperiment. Abundance estimates derived from",
                     "single-end RNA-seq.")),
-    BiocVersion = rep("3.11",3),
+    BiocVersion = rep("3.12",3),
     Genome = rep("GRCh38",3),
     SourceType = rep("tar.gz",3),
     SourceUrl = rep("https://www.synapse.org/#!Synapse:syn22237139/files/",3),

@@ -1,2 +1,35 @@
-Dampier, C.H. (2020). FieldEffectCrc: Tumor, tumor-adjacent normal, and healthy
-colorectal transcriptomes. R package version 0.1.0.
+citEntry(
+  entry = "misc",
+  title = "FieldEffectCrc",
+  author = personList(
+              as.person("Christopher H. Dampier")
+          ),
+  year = 2020,
+  version = "0.1.0",
+  textVersion = paste("Dampier, C.H. (2020). FieldEffectCrc. R package version 0.1.0.")
+)
+
+citEntry(
+  entry = "article",
+  title = "Oncogenic features in histologically normal mucosa: novel insights into field effect from a mega-analysis of colorectal transcriptomes",
+  author = personList(
+              as.person("Christopher H. Dampier"),
+              as.person("Matthew Devall"),
+              as.person("Lucas T. Jennelle"),
+              as.person("Virginia Diez-Obrero"),
+              as.person("Sarah J. Plummer"),
+              as.person("Victor Moreno"),
+              as.person("Graham Casey")
+          ),
+  year = 2020,
+  journal = "Clinical and Translational Gastroenterology",
+  doi = "...",
+  volume = "...",
+  issue = "...",
+  textVersion =
+   paste("Dampier, C.H., Devall, M., Jennelle, L.T., Diez-Obrero, V.,",
+    "Plummer, S.J., Moreno, V., Casey, G. (2020): Oncogenic features in",
+    "histologically normal mucosa: novel insights into field effect from",
+    "a mega-analysis of colorectal transcriptomes. Clinical and Translational",
+    "Gastroenterology")
+)
