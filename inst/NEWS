@@ -1,0 +1,11 @@
+CHANGES IN VERSION 0.99.0 (2020-07-14)
+--------------------------------------
+
+    o (0.99.0) Passed R CMD check and R CMD BiocCheck without errors or warnings
+    o (0.99.0) Submitted to Bioconductor
+
+
+CHANGES IN VERSION 0.1.0 (2020-07-03)
+-------------------------------------
+
+    o (0.1.0) Begin building FieldEffectCrc package

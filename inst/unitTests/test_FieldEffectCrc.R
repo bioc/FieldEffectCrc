@@ -1,9 +1,9 @@
-test_cohortA <- function() {
+test_cohortB <- function() {
   hub <- ExperimentHub::ExperimentHub()
   r <- AnnotationHub::query(hub, c("FieldEffectCrc"))
-  se <- r[["EH3524"]]
+  se <- r[["EH3525"]]
   RUnit::checkEquals(dim(se)[1], 37361)
-  RUnit::checkEquals(dim(se)[2], 834)
+  RUnit::checkEquals(dim(se)[2], 30)
 }
 
 test_make_txi <- function() {
@@ -11,7 +11,7 @@ test_make_txi <- function() {
   r <- AnnotationHub::query(hub, c("FieldEffectCrc"))
   se <- r[["EH3525"]]
   txi <- make_txi(se)
-  RUnit::checkEquals(class(txi), "list")
+  RUnit::checkEquals(is(txi)[1], "list")
 }
 
 test_reorder_assays <- function() {

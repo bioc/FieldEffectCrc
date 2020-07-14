@@ -22,8 +22,10 @@ as a \code{SummarizedExperiment} object}
   of the data:
 
   \itemize{
-    \item \code{make_txi}: makes a \code{tximport}-style list from a \code{SummarizedExperiment} object for downstream use
-    \item \code{reorder_assays}: reorders the assays of a \code{SummarizedExperiment} object so that counts is the first assay
+    \item \code{make_txi}: makes a \code{tximport}-style list from a
+      \code{SummarizedExperiment} object for downstream use
+    \item \code{reorder_assays}: reorders the assays of a
+      \code{SummarizedExperiment} object so that counts is the first assay
   }
 
   See the package vignette for examples of using these data in differential
@@ -54,26 +56,27 @@ as a \code{SummarizedExperiment} object}
 
   ## download selected resource by position
   ## output is SummarizedExperiment
-  data <- r[[1]]
+  ## cohort C is smaller than cohort A and quicker to load
+  data <- r[[3]]
   data
 
   ## download selected resource by hub id
   ## output is SummarizedExperiment
-  data <- r[["EH3524"]]
+  data <- r[["EH3526"]]
   data
 
   ## download selected resource by filter
   ## output is list of SummarizedExperiments
-  data <- ExperimentHub::loadResources(hub,"FieldEffectCrc","cohort A")
+  data <- ExperimentHub::loadResources(hub,"FieldEffectCrc","cohort C")
   data
 
   ## make a txi object
-  se <- r[["EH3524"]]
+  se <- r[["EH3526"]]
   txi <- make_txi(se)
   str(txi)
 
   ## move counts to the first assay slot
-  se <- r[["EH3524"]]
+  se <- r[["EH3526"]]
   se <- reorder_assays(se)
   se
 

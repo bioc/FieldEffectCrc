@@ -1,6 +1,7 @@
 \name{reorder_assays}
 \alias{reorder_assays}
-\title{Re-order the elements of the \code{assays} slot of a \code{SummarizedExperiment} object to make counts the first element}
+\title{Re-order the elements of the \code{assays} slot of a
+  \code{SummarizedExperiment} object to make counts the first element}
 
 \usage{
   reorder_assays(
@@ -32,8 +33,8 @@
 }
 
 \details{
-  Meant to facilitate alternative uses of the \code{SummarizedExperiment} objects as explained in
-  the \code{FieldEffectCrc} package vignette.
+  Meant to facilitate alternative uses of the \code{SummarizedExperiment} objects
+  as explained in the \code{FieldEffectCrc} package vignette.
 
   browseVignettes("FieldEffectCrc")
 }
@@ -43,7 +44,7 @@
   ## move counts to the first assay slot
   hub <- ExperimentHub::ExperimentHub()
   r <- AnnotationHub::query(hub, c("FieldEffectCrc"))
-  se <- r[["EH3524"]]
+  se <- r[["EH3526"]]
   se <- reorder_assays(se)
   se
   dds <- DESeq2::DESeqDataSet(se, design = ~ sampType)
