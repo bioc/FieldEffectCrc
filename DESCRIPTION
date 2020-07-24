@@ -1,6 +1,6 @@
 Package: FieldEffectCrc
-Version: 0.99.0
-Date: 2020-0714
+Version: 0.99.1
+Date: 2020-0724
 Title: Tumor, tumor-adjacent normal, and healthy colorectal transcriptomes as a
   SummarizedExperiment
 Authors@R: c(
@@ -12,7 +12,7 @@ Imports: BiocStyle, RUnit, SummarizedExperiment, ExperimentHub (>= 0.99.6),
   AnnotationHub, DESeq2
 Description: Processed RNA-seq data for 1,139 human primary colorectal tissue
   samples across three phenotypes, including tumor, normal adjacent-to-tumor,
-  and healthy, available as Synapse ID syn22237139 available at
+  and healthy, available as Synapse ID syn22237139 via
   <https://www.synapse.org/#!Synapse:syn22237139/files/>. Data have been parsed
   into a SummarizedExperiment object available in ExperimentHub to facilitate
   reproducibility and extension of results from Dampier et al.

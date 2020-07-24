@@ -44,28 +44,23 @@ The following example demonstrates how to download the dataset from `ExperimentH
 First, make sure the Bioconductor packages `BiocManager`, `SummarizedExperiment`,
 and `ExperimentHub` are installed:
 
-```{r install-packages}
+```{r, install-packages, eval=FALSE}
 if (!requireNamespace("BiocManager", quietly=TRUE)) {
-  install.packages("BiocManager", repos="https://cran.r-project.org")
+  install.packages("BiocManager")
 }
-if (!requireNamespace("SummarizedExperiment", quietly=TRUE)) {
-  BiocManager::install("SummarizedExperiment")
-}
-if (!requireNamespace("ExperimentHub", quietly=TRUE)) {
-  BiocManager::install("ExperimentHub")
-}
+BiocManager::install(c("SummarizedExperiment","ExperimentHub","FieldEffectCrc"))
 ```
 
 Second, load the `SummarizedExperiment` and `ExperimentHub` packages:
 
-```{r load-hub}
+```{r, load-hub}
 library(SummarizedExperiment)
 library(ExperimentHub)
 ```
 
 Third, find the `FieldEffectCrc` data objects and look at their descriptions:
 
-```{r find-data}
+```{r, find-data}
 hub = ExperimentHub()
 ## simply list the resource names
 ns <- listResources(hub,"FieldEffectCrc")
@@ -84,14 +79,14 @@ hc
 Fourth, explore the metadata of a particular file. Let's look at the data for
 cohort A:
 
-```{r explore-file}
+```{r, explore-file}
 md <- hub["EH3524"]
 md
 ```
 
 Fifth, download the data object itself as a `SummarizedExperiment`:
 
-```{r download-data}
+```{r, download-data}
 ## using resource ID
 data1 <- hub[["EH3524"]]
 data1
@@ -104,7 +99,7 @@ Since the data is a `SummarizedExperiment`, the different phenotypes can be
 accessed using `colData()`. The phenotype of interest in the field effect
 analysis is referred to as `sampType`:
 
-```{r phenotypes}
+```{r, phenotypes}
 summary(colData(data1)$sampType)
 ```
 
@@ -116,7 +111,7 @@ To immediately access the count data for the 834 samples in cohort A, load the
 accessor function to extract the `counts` assay, which is the second assay in
 the `SummarizedExperiment`:
 
-```{r quick-start-1}
+```{r, quick-start-1}
 se <- data1
 counts1 <- assays(se)[["counts"]]
 ```
@@ -125,13 +120,13 @@ Note that `assay()`, the singular as opposed to plural, will by default extract
 the first assay element from a `SummarizedExperiment` but will extract the 'i'th
 assay element with the `assay(se,i)` syntax:
 
-```{r quick-start-2}
+```{r, quick-start-2}
 counts2 <- assay(se, 2)
 ```
 
 The two alternatives are equivalent:
 
-```{r quick-start-3}
+```{r, quick-start-3}
 all(counts1==counts2)
 ```
 
@@ -176,7 +171,7 @@ in `DESeq2` when such information is available, we demonstrate creation of the
 First, make the `tximport` object, which is just an object of class `list` from
 base R:
 
-```{r make-txi}
+```{r, make-txi}
 ## manual construction
 txi <- as.list(assays(se))
 txi$countsFromAbundance <- "no"
@@ -191,7 +186,7 @@ Next, we could assign the clinical annotations from `colData(se)` to an
 annotations as an `S4Vectors::DataFrame`, so we are ready to create the
 `DESeqDataSet` object:
 
-```{r make-dds}
+```{r, make-dds}
 if (!requireNamespace("DESeq2", quietly=TRUE)) {
   BiocManager::install("DESeq2")
 }
@@ -210,7 +205,7 @@ to be estimated accurately. We could use something like the following code, whic
 selects for genes with a count greater than 10 RNA molecules in at least a third
 of all samples:
 
-```
+```{r, typical-filter}
 countLimit <- 10
 sampleLimit <- (1/3) * ncol(dds)
 keep <- rowSums( counts(dds) > countLimit ) >= sampleLimit
@@ -221,7 +216,7 @@ However, to expedite subsequent computational steps in this demonstration, we
 will select a random subset of genes and samples for analysis and then filter
 out any gene with a count less than 10 across all samples:
 
-```{r filter}
+```{r, special-filter}
 r <- sample(seq_len(nrow(dds)),6000)
 c <- sample(seq_len(ncol(dds)),250)
 dds <- dds[r,c]
@@ -236,7 +231,7 @@ library size and feature length) and dispersions for every gene, fits negative
 binomial models for every gene, and performs a Wald test for every gene in a
 single function:
 
-```{r size-factors}
+```{r, size-factors}
 dds <- DESeq(dds)
 ```
 
@@ -267,7 +262,7 @@ use here. The null model matrix should include adjustment variables only (i.e.
 no variables of interest). Without any adjustment variables, the null model
 includes an intercept term alone.
 
-```{r prep-input}
+```{r, prep-input}
 dat <- counts(dds, normalized=TRUE)  ## extract the normalized counts
 mod <- model.matrix(~sampType, data=colData(dds))  ## set the full model
 mod0 <- model.matrix(~1, data=colData(dds))  ## set the null model
@@ -279,7 +274,7 @@ The `sva` package offers two approaches for estimating the number of surrogate
 variables that should be included in a differential expression model, the Buja
 Eyuboglu and Leek approaches. Buja Eyuboglu is the default approach.
 
-```{r get-nsv}
+```{r, get-nsv}
 if (!requireNamespace("sva", quietly=TRUE)) {
   BiocManager::install("sva")
 }
@@ -291,7 +286,7 @@ nsv <- num.sv(dat, mod, method=c("be"), B=20, seed=1)  ## Buja Eyuboglu method
 
 The crucial function for estimating surrogate variables in RNA-seq data is `svaseq()`:
 
-```{r get-svs}
+```{r, get-svs}
 svs <- svaseq(dat, mod, mod0, n.sv=nsv)
 ```
 
@@ -304,7 +299,7 @@ We want to include the latent factors as adjustment variables in our statistical
 testing. Here, we add the surrogate variables to `colData` and update the
 `DESeqDataSet` design formula:
 
-```{r add-svs}
+```{r, add-svs}
 for (i in seq_len(svs$n.sv)) {
   newvar <- paste0("sv",i)
   colData(dds)[,newvar] <- svs$sv[,i]
@@ -320,7 +315,7 @@ design(dds) <- d
 Now that we have the surrogate variables in the `DESeqDataSet`, we can perform
 the differential expression analysis we set out to do:
 
-```{r test-de}
+```{r, test-de}
 dds <- DESeq(dds)
 ```
 
@@ -335,12 +330,12 @@ We want to extract results from each of the following 3 comparisons:
 With three categories under consideration, the `DESeq()` function call tests the
 first level against the other two, but the second and third levels are not tested
 against each other. (Note that the order of the levels is simply alphabetical if
-  they are not explicitly set.) Furthermore, the results reported with the
-  `results()` function are for the comparison of the first level against the last
-  by default. Therefore, in order to extract all the results of interst, we set
-  contrasts as follows:
+they are not explicitly set.) Furthermore, the results reported with the
+`results()` function are for the comparison of the first level against the last
+by default. Therefore, in order to extract all the results of interst, we set
+contrasts as follows:
 
-```{r results}
+```{r, results}
 cons <- list()
 m <- combn(levels(colData(dds)$sampType),2)
 for (i in seq_len(ncol(m))) {
@@ -349,7 +344,7 @@ for (i in seq_len(ncol(m))) {
 }
 res <- list()
 for (i in seq_len(length(cons))) {
-  res[[i]] <- results(dds, contrast=cons[[i]], alpha=0.05)  ## default alpha is 10%
+  res[[i]] <- results(dds, contrast=cons[[i]], alpha=0.05)  ## default alpha is 0.1
 }
 names(res) <- names(cons)
 ```
@@ -358,13 +353,13 @@ names(res) <- names(cons)
 
 Let's take a look at the results:
 
-```{r display}
+```{r, display}
 lapply(res,head)
 lapply(res,summary)
 ```
 
 # sessionInfo()
 
-```{r sessionInfo}
+```{r, sessionInfo}
 sessionInfo()
 ```

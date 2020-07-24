@@ -1,3 +1,10 @@
+CHANGES IN VERSION 0.99.1 (2020-07-24)
+--------------------------------------
+
+    o (0.99.1) Simplified vignette Installation code
+    o (0.99.1) Updated vignette typical-filter code chunk to evaluate as R code
+
+
 CHANGES IN VERSION 0.99.0 (2020-07-14)
 --------------------------------------
 

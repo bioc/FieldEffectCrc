@@ -5,8 +5,8 @@ citEntry(
               as.person("Christopher H. Dampier")
           ),
   year = 2020,
-  version = "0.99.0",
-  textVersion = paste("Dampier, C.H. (2020). FieldEffectCrc. R package version 0.99.0.")
+  version = "0.99.1",
+  textVersion = paste("Dampier, C.H. (2020). FieldEffectCrc. R package version 0.99.1.")
 )
 
 citEntry(
