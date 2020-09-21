@@ -1,17 +1,27 @@
 citEntry(
   entry = "misc",
-  title = "FieldEffectCrc",
+  title = paste(
+    "FieldEffectCrc: Tumor, tumor-adjacent normal, and healthy colorectal",
+    "transcriptomes as SummarizedExperiment objects"
+  ),
   author = personList(
               as.person("Christopher H. Dampier")
           ),
   year = 2020,
-  version = "0.99.1",
-  textVersion = paste("Dampier, C.H. (2020). FieldEffectCrc. R package version 0.99.1.")
+  version = "0.99.2",
+  textVersion = paste(
+    "Dampier, C.H. (2020). FieldEffectCrc: Tumor, tumor-adjacent normal,",
+    "and healthy colorectal transcriptomes as SummarizedExperiment objects.",
+    "R package version 0.99.2."
+  )
 )
 
 citEntry(
   entry = "article",
-  title = "Oncogenic features in histologically normal mucosa: novel insights into field effect from a mega-analysis of colorectal transcriptomes",
+  title = paste(
+    "Oncogenic Features in Histologically Normal Mucosa: Novel Insights Into",
+    "Field Effect From a Mega-Analysis of Colorectal Transcriptomes"
+  ),
   author = personList(
               as.person("Christopher H. Dampier"),
               as.person("Matthew Devall"),
@@ -23,13 +33,15 @@ citEntry(
           ),
   year = 2020,
   journal = "Clinical and Translational Gastroenterology",
-  doi = "...",
-  volume = "...",
-  issue = "...",
-  textVersion =
-   paste("Dampier, C.H., Devall, M., Jennelle, L.T., Diez-Obrero, V.,",
-    "Plummer, S.J., Moreno, V., Casey, G. (2020): Oncogenic features in",
-    "histologically normal mucosa: novel insights into field effect from",
-    "a mega-analysis of colorectal transcriptomes. Clinical and Translational",
-    "Gastroenterology")
+  doi = "10.14309/ctg.0000000000000210",
+  volume = "11",
+  issue = "7",
+  pages = "e00210",
+  textVersion = paste(
+    "Dampier, C.H., Devall, M., Jennelle, L.T., Diez-Obrero, V., Plummer,",
+    "S.J., Moreno, V., Casey, G. Oncogenic Features in Histologically Normal",
+    "Mucosa: Novel Insights Into Field Effect From a Mega-Analysis of",
+    "Colorectal Transcriptomes. Clinical and Translational Gastroenterology.",
+    "2020 Jul; 11(7): e00210."
+  )
 )

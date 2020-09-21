@@ -1,6 +1,7 @@
 \name{make_txi}
 \alias{make_txi}
-\title{Make a \code{tximport}-style list object from a \code{SummarizedExperiment}}
+\title{Make a \code{tximport}-style list object from a
+    \code{SummarizedExperiment}}
 
 \usage{
   make_txi(
@@ -14,10 +15,10 @@
 }
 
 \value{
-  A list object with 4 elements, including 3 matrices and a character string. The
-  matrices are in the following order: abundance, counts, length. The character
-  string specifies whether \code{tximport} has scaled the counts. None of the
-  counts have been scaled in the \code{FieldEffectCrc} package.
+  A list object with 4 elements, including 3 matrices and a character string.
+  The matrices are in the following order: abundance, counts, length. The
+  character string specifies whether \code{tximport} has scaled the counts. None
+  of the counts have been scaled in the \code{FieldEffectCrc} package.
 }
 
 \description{
@@ -27,8 +28,8 @@
 }
 
 \details{
-  Meant to facilitate differential expression using \code{DESeq2} as explained in
-  the \code{FieldEffectCrc} package vignette.
+  Meant to facilitate differential expression using \code{DESeq2} as explained
+  in the \code{FieldEffectCrc} package vignette.
 
   browseVignettes("FieldEffectCrc")
 }

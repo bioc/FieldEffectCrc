@@ -37,7 +37,7 @@ library(SummarizedExperiment)
 download_parse <- function(email, password, downloads) {
 
   ## login
-  synLogin(email=email,password=password)
+  synLogin(email=email, password=password)
 
   ## annotations
   cat("\ndownloading and parsing annotation files ...\n")
@@ -45,8 +45,8 @@ download_parse <- function(email, password, downloads) {
   filepath <- entity$path
   untar(filepath, exdir=downloads)
   ann <- list()
-  for (cohort in c("A","B","C")) {
-    f <- paste0(downloads,paste0("cohort_",cohort,".tsv"))
+  for (cohort in c("A", "B", "C")) {
+    f <- paste0(downloads, paste0("cohort_", cohort, ".tsv"))
     ann[[cohort]] <- read.table(f, header=TRUE, sep="\t")
   }
   file.remove(filepath)
@@ -57,11 +57,13 @@ download_parse <- function(email, password, downloads) {
   filepath <- entity$path
   untar(filepath, exdir=downloads)
   expr <- list()
-  for (cohort in c("A","B","C")) {
+  for (cohort in c("A", "B", "C")) {
     expr[[cohort]] <- list()
-    for (valtype in c("abundance","counts","length")) {
-      f <- paste0(downloads,paste0("cohort_",cohort,"_",valtype,".tsv"))
-      expr[[cohort]][[valtype]] <- data.matrix(read.table(f, header=TRUE, row.names=1, sep="\t"))
+    for (valtype in c("abundance", "counts", "length")) {
+      f <- paste0(downloads, paste0("cohort_", cohort, "_", valtype, ".tsv"))
+      expr[[cohort]][[valtype]] <- data.matrix(
+        read.table(f, header=TRUE, row.names=1, sep="\t")
+      )
     }
   }
   file.remove(filepath)
@@ -71,17 +73,17 @@ download_parse <- function(email, password, downloads) {
 
   ## cleanup
   cat("cleaning up downloaded and extracted files ...\n")
-  for (cohort in c("A","B","C")) {
-    f <- paste0(downloads,paste0("cohort_",cohort,".tsv"))
+  for (cohort in c("A", "B", "C")) {
+    f <- paste0(downloads, paste0("cohort_", cohort, ".tsv"))
     file.remove(f)
-    for (valtype in c("abundance","counts","length")) {
-      f <- paste0(downloads,paste0("cohort_",cohort,"_",valtype,".tsv"))
+    for (valtype in c("abundance", "counts", "length")) {
+      f <- paste0(downloads, paste0("cohort_", cohort, "_", valtype, ".tsv"))
       file.remove(f)
     }
   }
 
   cat("done !!!\n")
-  return(setNames(list(ann,expr),c("ann","expr")))
+  return(setNames(list(ann, expr), c("ann", "expr")))
 
 }
 
@@ -98,8 +100,8 @@ download_parse <- function(email, password, downloads) {
 
 
 create_se <- function(l, datadir) {
-  cat("writing SummarizedExperiments to",datadir,"...\n")
-  for (cohort in c("A","B","C")) {
+  cat("writing SummarizedExperiments to", datadir, "...\n")
+  for (cohort in c("A", "B", "C")) {
     md <- list()
     md[["cohort"]] <- cohort
     md[["build"]] <- "GRCh38"
@@ -110,10 +112,10 @@ create_se <- function(l, datadir) {
             colData=S4Vectors::DataFrame(l[["ann"]][[cohort]]),
             metadata=md
           )
-    filepath <- paste0(datadir,"FieldEffectCrc_cohort_",cohort,"_SE.Rda")
+    filepath <- paste0(datadir, "FieldEffectCrc_cohort_", cohort, "_SE.Rda")
     save(se, file=filepath)
   }
-  cat("done writing SummarizedExperiments to",datadir,"!!!\n")
+  cat("done writing SummarizedExperiments to", datadir, "!!!\n")
 }
 
 

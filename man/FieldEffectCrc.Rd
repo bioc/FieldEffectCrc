@@ -2,24 +2,24 @@
 \name{FieldEffectCrc-package}
 \alias{FieldEffectCrc-package}
 \alias{FieldEffectCrc}
-\title{Tumor, tumor-adjacent normal, and healthy colorectal transcriptomes available
-as a \code{SummarizedExperiment} object}
+\title{Tumor, tumor-adjacent normal, and healthy colorectal transcriptomes
+available as a \code{SummarizedExperiment} object}
 
 \description{
-  Processed RNA-seq data for 1,139 human primary colorectal tissue samples across
-  three phenotypes, including tumor, normal adjacent-to-tumor, and healthy,
-  available as Synapse ID syn22237139 hosted on Synapse:
+  Processed RNA-seq data for 1,139 human primary colorectal tissue samples
+  across three phenotypes, including tumor, normal adjacent-to-tumor, and
+  healthy, available as Synapse ID syn22237139 hosted on Synapse:
 
   <https://www.synapse.org/#!Synapse:syn22237139/files/>
 
-  Data have been parsed into three \code{SummarizedExperiment} objects available in
-  \code{ExperimentHub} to facilitate reproducibility and extension of results from
-  Dampier et al.
+  Data have been parsed into three \code{SummarizedExperiment} objects available
+  via \code{ExperimentHub} to facilitate reproducibility and extension of
+  results from Dampier et al. (PMCID: PMC7386360, PMID: 32764205).
 }
 
 \details{
-  Includes data as well as two simple helper functions to execute common manipulations
-  of the data:
+  Includes data as well as two simple helper functions to execute common
+  manipulations of the data:
 
   \itemize{
     \item \code{make_txi}: makes a \code{tximport}-style list from a
@@ -34,8 +34,8 @@ as a \code{SummarizedExperiment} object}
   browseVignettes("FieldEffectCrc")
 
   Details of how the \code{SummarizedExperiment} objects were created from count
-  matrices are available in the \code{inst/scripts/} directory of the source package
-  in the \code{make-data.R} file.
+  matrices are available in the \code{inst/scripts/} directory of the source
+  package in the \code{make-data.R} file.
 }
 
 \examples{
@@ -47,7 +47,7 @@ as a \code{SummarizedExperiment} object}
   hub <- ExperimentHub::ExperimentHub()
 
   ## list resources associated with package
-  x <- ExperimentHub::listResources(hub,"FieldEffectCrc")
+  x <- ExperimentHub::listResources(hub, "FieldEffectCrc")
   x
 
   ## query hub for package resources
@@ -67,7 +67,7 @@ as a \code{SummarizedExperiment} object}
 
   ## download selected resource by filter
   ## output is list of SummarizedExperiments
-  data <- ExperimentHub::loadResources(hub,"FieldEffectCrc","cohort C")
+  data <- ExperimentHub::loadResources(hub, "FieldEffectCrc", "cohort C")
   data
 
   ## make a txi object

@@ -16,12 +16,13 @@
 }
 
 \format{
-  A \code{SummarizedExperiment} object containing 3 \code{assays} of matrices, each
-  37,361 rows x 275 columns. Each row is a gene and each column is a sample.
+  A \code{SummarizedExperiment} object containing 3 \code{assays} of matrices,
+  each 37,361 rows x 275 columns. Each row is a gene and each column is a
+  sample.
 
   The \code{SummarizedExperiment} object also includes a \code{colData}
-  \code{S4Vectors::DFrame} object with 275 rows and 27 columns. Each row is a sample
-  and each column is a field. The fields are described below.
+  \code{S4Vectors::DFrame} object with 275 rows and 27 columns. Each row is a
+  sample and each column is a field. The fields are described below.
 
   \itemize{
     \item {dirName}: name of directory into which raw data for sample was
@@ -82,15 +83,16 @@
 \examples{
   library(ExperimentHub)
   hub <- ExperimentHub::ExperimentHub()
-  data <- ExperimentHub::loadResources(hub,"FieldEffectCrc","cohort C")
+  data <- ExperimentHub::loadResources(hub, "FieldEffectCrc", "cohort C")
   se <- data[[1]]
   se
 }
 
 \references{Dampier, C.H., Devall, M., Jennelle, L.T., Diez-Obrero, V., Plummer,
-  S.J., Moreno, V., Casey, G. (2020) Oncogenic features in histologically normal
-  mucosa: novel insights into field effect from a mega-analysis of colorectal
-  transcriptomes. Clinical and Translational Gastroenterology.}
+  S.J., Moreno, V., Casey, G. Oncogenic Features in Histologically Normal
+  Mucosa: Novel Insights Into Field Effect From a Mega-Analysis of Colorectal
+  Transcriptomes. Clinical and Translational Gastroenterology. 2020 Jul; 11(7):
+  e00210.}
 
 \author{Chris Dampier}
 
