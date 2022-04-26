@@ -1,5 +1,5 @@
 Package: FieldEffectCrc
-Version: 1.5.0
+Version: 1.6.0
 Date: 2020-0920
 Title: Tumor, tumor-adjacent normal, and healthy colorectal transcriptomes as
   SummarizedExperiment objects
